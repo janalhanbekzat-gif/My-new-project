@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <title>Compass Game</title>
+    <style>
+        /* 1. Сайттың бас мәзіріне (Header) арналған стильдер */
+        .site-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: #333;
+            color: white;
+            font-family: sans-serif;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .menu a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            transition: 0.3s;
+        }
+        .menu a:hover {
+            color: #4CAF50;
+        }
+
+        /* 2. Ойынның негізгі стильдері */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f9f9f9;
+        }
+        
+        .game-wrapper {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        /* Тапсырма бойынша: CSS display қасиетін table мәндерімен қолдану [cite: 50] */
+        .compass-table {
+            display: table;
+            border-spacing: 15px;
+            margin: 20px 0;
+        }
+        .row { display: table-row; }
+
+        /* Тапсырма бойынша: Child selector қолдану [cite: 53] */
+        .row > div {
+            display: table-cell;
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 28px;
+            font-weight: bold;
+            color: red; /* Бағыт әріптері */
+        }
+
+        .arrow-btn {
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            background: #eee;
+            border: 1px solid #ccc;
+            font-size: 20px;
+            color: blue;
+        }
+
+        /* Тапсырма бойынша: Қиғаш батырманы бұру [cite: 61, 62, 63, 64] */
+        .diagonal {
+            transform: rotate(-45deg);
+        }
+
+        /* Тапсырма бойынша: Input өрістері жіңішке және 1 символ [cite: 56, 57] */
+        .controls input {
+            width: 30px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        /* Тапсырма бойынша: Restart және Update мәтінін italic жасау [cite: 58, 60] */
+        .italic-text {
+            font-style: italic;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="logo">Жаналхан Бекзат</div>
+        <nav class="menu">
+            <a href="bekzat.html">Басты бет</a>
+            <a href="blog1.html">Блог</a>
+            <a href="2 exercise.html">Ойын</a>
+            <a href="compassGame.html">CompassGame</a>
+        </nav>
+    </header>
+
+    <div class="game-wrapper">
+        <h1>Compass Game</h1> [cite: 20]
+        <p>The direction letters on the "compass" are scrambled. Press the arrows to properly position the direction letters.</p> [cite: 26]
+
+        <div class="compass-table">
+            <div class="row">
+                <div><button class="arrow-btn diagonal" onclick="swap('top', 'right')">↔</button></div>
+                <div id="top">E</div> [cite: 22]
+                <div></div>
+            </div>
+            <div class="row">
+                <div id="left">S</div> [cite: 23]
+                <div><button class="arrow-btn" onclick="swap('left', 'right')">↔</button></div>
+                <div id="right">N</div> [cite: 24]
+            </div>
+            <div class="row">
+                <div></div>
+                <div id="bottom">W</div> [cite: 25]
+                <div><button class="arrow-btn diagonal" onclick="swap('bottom', 'left')">↔</button></div>
+            </div>
+        </div>
+
+        <p>To restart the game, press <span class="italic-text">Restart</span>, enter N, S, E, and W in any order in the boxes below, and then press <span class="italic-text">Update</span>.</p> [cite: 33, 37, 59]
+
+        <button onclick="restartGame()">Restart</button> [cite: 33]
+
+        <div class="controls" style="margin: 20px 0;">
+            Top: <input type="text" id="inTop" maxlength="1" disabled> [cite: 32, 35, 39, 57]
+            Left: <input type="text" id="inLeft" maxlength="1" disabled> [cite: 32, 35, 40, 57]
+            Right: <input type="text" id="inRight" maxlength="1" disabled> [cite: 32, 35, 41, 57]
+            Bottom: <input type="text" id="inBottom" maxlength="1" disabled> [cite: 32, 35, 42, 57]
+        </div>
+
+        <button id="updateBtn" onclick="updateCompass()" disabled>Update</button> [cite: 32, 36, 37]
+    </div>
+
+    <script>
+        // Бағыттарды ауыстыру функциясы [cite: 29, 30]
+        function swap(id1, id2) {
+            let el1 = document.getElementById(id1);
+            let el2 = document.getElementById(id2);
+            let temp = el1.innerText;
+            el1.innerText = el2.innerText;
+            el2.innerText = temp;
+        }
+
+        // Restart батырмасының логикасы [cite: 33]
+        function restartGame() {
+            // Бағыт әріптерін өшіру [cite: 34]
+            document.getElementById('top').innerText = "";
+            document.getElementById('left').innerText = "";
+            document.getElementById('right').innerText = "";
+            document.getElementById('bottom').innerText = "";
+
+            // Өрістерді және Update батырмасын белсендіру [cite: 35, 36]
+            setDisabledStatus(false);
+        }
+
+        // Update батырмасының логикасы [cite: 37]
+        function updateCompass() {
+            // Енгізілген әріптерді орындарына көшіру [cite: 38, 43]
+            document.getElementById('top').innerText = document.getElementById('inTop').value.toUpperCase();
+            document.getElementById('left').innerText = document.getElementById('inLeft').value.toUpperCase();
+            document.getElementById('right').innerText = document.getElementById('inRight').value.toUpperCase();
+            document.getElementById('bottom').innerText = document.getElementById('inBottom').value.toUpperCase();
+
+            // Өрістер мен Update батырмасын қайта өшіру [cite: 45, 46]
+            setDisabledStatus(true);
+        }
+
+        function setDisabledStatus(status) {
+            document.getElementById('inTop').disabled = status;
+            document.getElementById('inLeft').disabled = status;
+            document.getElementById('inRight').disabled = status;
+            document.getElementById('inBottom').disabled = status;
+            document.getElementById('updateBtn').disabled = status;
+        }
+    </script>
+</body>
+</html>

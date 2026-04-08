@@ -1,0 +1,141 @@
+/* Жалпы стильдер */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background-color: #f0f4f1; /* Өте ашық жасыл-сұр фон */
+    color: #1a2e1a;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header - Қою жасыл стиль */
+.site-header {
+    background-color: #064e3b; /* Қою изумруд */
+    color: #ffffff;
+    padding: 20px 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.menu {
+    display: flex;
+    gap: 20px;
+}
+
+.menu a {
+    color: #a7f3d0;
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.menu a:hover, .menu a.active {
+    color: #ffffff;
+}
+
+/* Негізгі контентті ортаға туралау */
+.content-wrapper {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 50px 10%;
+}
+
+/* Блог карточкасының дизайны */
+.blog-card {
+    background: #ffffff;
+    max-width: 800px;
+    width: 100%;
+    padding: 40px;
+    border-radius: 15px;
+    border-left: 8px solid #059669; /* Жасыл жиек */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+}
+
+.blog-header h1 {
+    color: #064e3b;
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.date {
+    color: #6b7280;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #059669;
+    margin: 25px 0 15px 0;
+    border-bottom: 1px solid #ecfdf5;
+    padding-bottom: 5px;
+}
+
+.tech-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap; /* Дәрістегі flex-wrap қолдану */
+    gap: 10px;
+    padding: 10px 0;
+}
+
+.tech-list li {
+    background: #ecfdf5;
+    color: #065f46;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    border: 1px solid #d1fae5;
+}
+
+/* Батырма */
+.btn {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 25px;
+    background-color: #059669;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #047857;
+    transform: translateX(-5px);
+}
+
+/* Footer */
+.site-footer {
+    background-color: #064e3b;
+    color: #d1fae5;
+    text-align: center;
+    padding: 20px;
+    margin-top: auto;
+}
+
+/* Мобильді нұсқа */
+@media (max-width: 600px) {
+    .site-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .blog-card {
+        padding: 20px;
+    }
+}

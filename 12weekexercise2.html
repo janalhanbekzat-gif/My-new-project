@@ -1,0 +1,94 @@
+// 1-ТАПСЫРМА: Кластарды анықтау және иерархия [cite: 17, 19]
+
+// "Адам" (Person) - негізгі аталық класс [cite: 14, 23]
+class Person {
+    constructor(firstName, lastName) {
+        this._firstName = firstName; // Аты [cite: 24]
+        this._lastName = lastName;   // Тегі [cite: 25]
+    }
+}
+
+// Пән класы [cite: 10]
+class Subject {
+    constructor(name, lessons, exercises) {
+        this.name = name;      // Атауы [cite: 11]
+        this.lessons = lessons; // Сабақ саны [cite: 12]
+        this.exercises = exercises; // Жаттығулар саны [cite: 13]
+    }
+}
+
+// 2-ТАПСЫРМА: Студент және Жұмысшы кластары [cite: 22]
+
+// Студент класы (Person-нан тарайды) [cite: 26, 27]
+class Student extends Person {
+    constructor(firstName, lastName, id, mark) {
+        super(firstName, lastName); // Аталық класты шақыру [cite: 41]
+        this._id = id;     // Бірегей нөмір [cite: 5]
+        this._mark = mark; // Қосымша қасиет: баға [cite: 28]
+    }
+
+    // Инкапсуляция (get/set) [cite: 40, 42]
+    get mark() { return this._mark; }
+    set mark(value) { this._mark = value; }
+}
+
+// Жұмысшы класы (Person-нан тарайды) [cite: 29, 30]
+class Worker extends Person {
+    constructor(firstName, lastName, wage, hoursWorked) {
+        super(firstName, lastName);
+        this._wage = wage;               // Жалақы [cite: 32]
+        this._hoursWorked = hoursWorked; // Жұмыс сағаты [cite: 33]
+    }
+
+    // Сағаттық жалақыны есептеу әдісі [cite: 35]
+    calculateHourlyWage() {
+        // Формула: жалақы / жұмыс сағаты [cite: 37, 38]
+        return this._wage / this._hoursWorked;
+    }
+
+    get wage() { return this._wage; }
+}
+
+// 3-ТАПСЫРМА: Студенттерді сұрыптау [cite: 43]
+
+// 10 студенттен тұратын массив [cite: 44]
+let students = [
+    new Student("Әли", "Асқар", 1, 90),
+    new Student("Баян", "Мұрат", 2, 85),
+    new Student("Сара", "Нұр", 3, 70),
+    new Student("Дана", "Серік", 4, 95),
+    new Student("Ербол", "Қанат", 5, 60),
+    new Student("Жанна", "Болат", 6, 88),
+    new Student("Зере", "Иса", 7, 92),
+    new Student("Иван", "Пак", 8, 75),
+    new Student("Мұрат", "Омар", 9, 82),
+    new Student("Айша", "Әли", 10, 78)
+];
+
+// Бағасы бойынша өсу ретімен сұрыптау [cite: 45, 46]
+students.sort((a, b) => a.mark - b.mark);
+
+console.log("--- Студенттер (бағасы бойынша өсу реті) ---");
+students.forEach(s => console.log(`${s._firstName}: ${s.mark}`));
+
+// 4-ТАПСЫРМА: Жұмысшыларды сұрыптау [cite: 47]
+
+// 10 жұмысшыдан тұратын массив [cite: 48]
+let workers = [
+    new Worker("Арман", "Асан", 250000, 160),
+    new Worker("Меруерт", "Үсен", 320000, 150),
+    new Worker("Серік", "Би", 180000, 170),
+    new Worker("Әлия", "Дос", 280000, 160),
+    new Worker("Нұрлан", "Нұр", 150000, 140),
+    new Worker("Гүлнар", "Көл", 400000, 180),
+    new Worker("Диас", "Тау", 230000, 165),
+    new Worker("Марат", "Ким", 195000, 155),
+    new Worker("Жандос", "Темір", 215000, 160),
+    new Worker("Болат", "Жол", 290000, 175)
+];
+
+// Жалақысы бойынша кему ретімен сұрыптау [cite: 49]
+workers.sort((a, b) => b.wage - a.wage);
+
+console.log("\n--- Жұмысшылар (жалақысы бойынша кему реті) ---");
+workers.forEach(w => console.log(`${w._firstName}: ${w.wage} тг`));

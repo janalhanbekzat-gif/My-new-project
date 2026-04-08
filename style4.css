@@ -1,0 +1,137 @@
+/* --- 1. Базалық стильдер --- */
+* {
+    margin: 0; padding: 0; box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f0fdf4;
+    color: #064e3b;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- 2. Header --- */
+.site-header {
+    background-color: #064e3b;
+    color: #ffffff;
+    padding: 15px 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky; top: 0; z-index: 1000;
+}
+
+.menu { display: flex; gap: 20px; }
+.menu a { color: #a7f3d0; text-decoration: none; font-weight: 500; }
+.menu a:hover { color: #ffffff; }
+
+/* --- 3. Hero & Card --- */
+.hero { flex: 1; padding: 40px 10%; display: flex; flex-direction: column; gap: 40px; }
+
+.card {
+    background: #ffffff; display: flex; align-items: center;
+    justify-content: space-between; padding: 30px;
+    border-radius: 20px; border-left: 8px solid #059669;
+}
+
+.card-left { flex: 2; }
+.role { font-weight: bold; color: #059669; margin: 10px 0; }
+.actions { display: flex; gap: 10px; margin-top: 20px; }
+
+.btn {
+    padding: 10px 20px; border-radius: 8px; text-decoration: none;
+    font-weight: 600; border: 2px solid #059669;
+}
+.btn:not(.outline) { background-color: #059669; color: white; }
+.btn.outline { color: #059669; }
+
+.avatar {
+    width: 160px; height: 160px; border-radius: 50%;
+    background: #ecfdf5; border: 2px dashed #059669;
+    display: flex; align-items: center; justify-content: center;
+}
+
+/* --- 4. Дағдылар --- */
+.skills { text-align: center; }
+.skill-list { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 15px; }
+.skill { background: white; padding: 10px 20px; border-radius: 25px; border: 1px solid #d1fae5; }
+
+/* --- 5. Күнтізбе Секциясы (Grid негізінде) --- */
+.calendar-section { padding: 40px 0; border-top: 2px solid #d1fae5; }
+.section-title { text-align: center; margin-bottom: 30px; }
+
+.calendar-layout { display: flex; gap: 20px; flex-wrap: wrap; }
+
+.cal-col {
+    background: white; padding: 20px; border-radius: 15px;
+    flex: 1; min-width: 280px; border: 1px solid #d1fae5;
+}
+
+/* GRID CALENDAR СТИЛІ */
+.grid-calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    text-align: center;
+}
+
+.grid-day {
+    min-height: 45px; display: flex; align-items: center; justify-content: center;
+    border-radius: 8px; font-size: 15px;
+}
+
+.grid-day.head { font-weight: bold; color: #064e3b; border-bottom: 2px solid #f0fdf4; }
+.weekend { color: #b91c1c; font-weight: bold; }
+.empty { visibility: hidden; }
+
+/* Мерекелік күндер */
+.special {
+    background: #059669; color: white; padding: 6px 12px;
+    border-radius: 6px; text-decoration: none; font-weight: bold;
+}
+
+/* ТАҢДАЛҒАН КҮННІҢ ЭФФЕКТІ */
+.grid-day:has(.special:target) {
+    background-color: #064e3b;
+    transform: scale(1.05);
+}
+.grid-day:has(.special:target) .special {
+    background: transparent;
+}
+
+/* АҚПАРАТ ПАНЕЛІ (Интерактивті) */
+.info-box { background: #ecfdf5; min-height: 250px; }
+
+.info-item {
+    display: none; /* Бастапқыда жасыру */
+    padding: 20px; background: white; border-radius: 10px;
+    border-left: 6px solid #059669; animation: slideUp 0.4s ease;
+}
+
+.info-item:target { display: block; } /* Басқанда көрсету */
+
+/* Ештеңе таңдалмағандағы жазу */
+.info-box:not(:has(.info-item:target))::after {
+    content: "Ақпаратты көру үшін күнтізбедегі жасыл күндерді басыңыз";
+    display: block; padding: 40px; text-align: center; color: #059669; font-style: italic;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- 6. Footer --- */
+.site-footer { background: #064e3b; color: white; padding: 30px 10% 15px; }
+.footer-content { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+.footer-social a { color: white; margin-left: 15px; text-decoration: none; }
+
+/* --- 7. Responsive --- */
+@media (max-width: 768px) {
+    .card, .calendar-layout, .footer-content { flex-direction: column; text-align: center; }
+    .site-header { flex-direction: column; gap: 10px; }
+    .actions { justify-content: center; }
+}

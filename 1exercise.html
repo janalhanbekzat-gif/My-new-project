@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практикалық жұмыс - Нәтиже шығару</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            transition: 0.5s;
+        }
+        .main-container {
+            width: 100%;
+            max-width: 500px;
+        }
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-top: 0;
+            border-left: 4px solid #007bff;
+            padding-left: 10px;
+        }
+        input {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            min-height: 20px;
+            color: #495057;
+            font-weight: bold;
+            white-space: pre-line; /* Жаңа жолдарды сақтау үшін */
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="card">
+        <h2>1. Сәлемдесу [cite: 1, 2]</h2>
+        <input type="text" id="name1" placeholder="Атыңызды жазыңыз">
+        <button onclick="task1()">Көрсету</button>
+        <div id="res1" class="result">Нәтиже осында шығады...</div>
+    </div>
+
+    <div class="card">
+        <h2>2. Сандардың қосындысы [cite: 24, 26]</h2>
+        <input type="number" id="numA" placeholder="Бірінші сан" value="5">
+        <input type="number" id="numB" placeholder="Екінші сан" value="3">
+        <button onclick="task2()">Есептеу</button>
+        <div id="res2" class="result">Нәтиже: 0</div>
+    </div>
+
+    <div class="card">
+        <h2>3. Анкета мәліметтері [cite: 48, 50]</h2>
+        <input type="text" id="userName" placeholder="Аты (мысалы: Ali) [cite: 55]">
+        <input type="number" id="userAge" placeholder="Жасы (мысалы: 19) [cite: 56]">
+        <button onclick="task3()">Мәліметті шығару</button>
+        <div id="res3" class="result">Мәліметтер...</div>
+    </div>
+
+    <div class="card">
+        <h2>4. Күн және Түс таңдау [cite: 82, 83]</h2>
+        <label>Күн: </label>
+        <input type="date" id="dateInput">
+        <label>Түс: </label>
+        <input type="color" id="colorInput" style="height: 40px;">
+        <button onclick="task4()">Қолдану</button>
+        <div id="res4" class="result">Таңдалған мәндер...</div>
+    </div>
+</div>
+
+<script>
+    // 1. Сәлемдесу [cite: 17, 19]
+    function task1() {
+        let name = document.getElementById("name1").value;
+        let output = name ? "Сәлем, " + name + "!" : "Өтініш, есіміңізді енгізіңіз.";
+        document.getElementById("res1").innerText = output;
+    }
+
+    // 2. Қосынды [cite: 37, 40]
+    function task2() {
+        let a = Number(document.getElementById("numA").value);
+        let b = Number(document.getElementById("numB").value);
+        let sum = a + b;
+        document.getElementById("res2").innerText = "Нәтиже: " + sum;
+    }
+
+    // 3. Форма мәліметтері [cite: 74, 77]
+    function task3() {
+        let name = document.getElementById("userName").value;
+        let age = document.getElementById("userAge").value;
+        if (name && age) {
+            document.getElementById("res3").innerText = "Аты: " + name + "\nЖасы: " + age;
+        } else {
+            document.getElementById("res3").innerText = "Барлық өрісті толтырыңыз!";
+        }
+    }
+
+    // 4. Үй жұмысы [cite: 107, 110]
+    function task4() {
+        let date = document.getElementById("dateInput").value;
+        let color = document.getElementById("colorInput").value;
+        
+        if (date) {
+            document.getElementById("res4").innerText = "Таңдалған күн: " + date + "\nТаңдалған түс: " + color;
+            document.body.style.backgroundColor = color; // Фонды өзгерту 
+        } else {
+            document.getElementById("res4").innerText = "Күнді таңдаңыз!";
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <title>ООП Практикалық Тапсырма</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; background-color: #f4f4f4; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h2 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 5px; }
+        pre { background: #272822; color: #f8f8f2; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        .result-box { background: #e7f3fe; border-left: 5px solid #2196F3; padding: 10px; margin: 10px 0; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>12-апта: Практикалық тапсырма</h1>
+    
+    <h2>3-тапсырма: Студенттер (Бағасы бойынша өсу реті)</h2>
+    <div id="student-result" class="result-box"></div>
+
+    <h2>4-тапсырма: Жұмысшылар (Жалақысы бойынша кему реті)</h2>
+    <div id="worker-result" class="result-box"></div>
+</div>
+
+<script>
+// --- 1 ЖӘНЕ 2-ТАПСЫРМА: КЛАСТАР ҚҰРЫЛЫМЫ ---
+
+// Адам класы (Аталық класс) [cite: 14, 23]
+class Person {
+    constructor(firstName, lastName) {
+        this._firstName = firstName; // Аты [cite: 4, 24]
+        this._lastName = lastName;   // Тегі [cite: 25]
+    }
+}
+
+// Пән класы [cite: 10]
+class Subject {
+    constructor(name, lessons, exercises) {
+        this.name = name;           // Атауы [cite: 11]
+        this.lessons = lessons;     // Сабақ саны [cite: 12]
+        this.exercises = exercises; // Жаттығулар саны [cite: 13]
+    }
+}
+
+// Студент класы [cite: 26, 27]
+class Student extends Person {
+    constructor(firstName, lastName, id, mark) {
+        super(firstName, lastName); // Конструкторды дұрыс жазу [cite: 41]
+        this._id = id;              // Бірегей нөмірі [cite: 5]
+        this._mark = mark;          // Қосымша қасиет: баға [cite: 28]
+    }
+    get mark() { return this._mark; } // Инкапсуляция [cite: 40, 42]
+    set mark(value) { this._mark = value; }
+}
+
+// Жұмысшы класы [cite: 29, 30]
+class Worker extends Person {
+    constructor(firstName, lastName, wage, hoursWorked) {
+        super(firstName, lastName);
+        this._wage = wage;               // Жалақы [cite: 32]
+        this._hoursWorked = hoursWorked; // Жұмыс сағаты [cite: 33]
+    }
+
+    // Сағаттық жалақыны есептеу әдісі [cite: 35]
+    calculateHourlyWage() {
+        return this._wage / this._hoursWorked; // Формула [cite: 38]
+    }
+    get wage() { return this._wage; }
+}
+
+// --- 3-ТАПСЫРМА: СТУДЕНТТЕР МАССИВІ ЖӘНЕ СҰРЫПТАУ ---
+
+let students = [
+    new Student("Әли", "Асқар", 1, 90),
+    new Student("Баян", "Мұрат", 2, 85),
+    new Student("Сара", "Нұр", 3, 70),
+    new Student("Дана", "Серік", 4, 95),
+    new Student("Ербол", "Қанат", 5, 60),
+    new Student("Жанна", "Болат", 6, 88),
+    new Student("Зере", "Иса", 7, 92),
+    new Student("Иван", "Пак", 8, 75),
+    new Student("Мұрат", "Омар", 9, 82),
+    new Student("Айша", "Әли", 10, 78)
+];
+
+// Бағасы бойынша өсу ретімен сұрыптау [cite: 45, 46]
+students.sort((a, b) => a.mark - b.mark);
+
+// Нәтижені экранға шығару
+let studDiv = document.getElementById('student-result');
+students.forEach(s => {
+    studDiv.innerText += `${s._firstName} ${s._lastName} - Бағасы: ${s.mark}\n`;
+});
+
+// --- 4-ТАПСЫРМА: ЖҰМЫСШЫЛАР МАССИВІ ЖӘНЕ СҰРЫПТАУ ---
+
+let workers = [
+    new Worker("Арман", "Асан", 250000, 160),
+    new Worker("Меруерт", "Үсен", 320000, 150),
+    new Worker("Серік", "Би", 180000, 170),
+    new Worker("Әлия", "Дос", 280000, 160),
+    new Worker("Нұрлан", "Нұр", 150000, 140),
+    new Worker("Гүлнар", "Көл", 400000, 180),
+    new Worker("Диас", "Тау", 230000, 165),
+    new Worker("Марат", "Ким", 195000, 155),
+    new Worker("Жандос", "Темір", 215000, 160),
+    new Worker("Болат", "Жол", 290000, 175)
+];
+
+// Жалақысы бойынша кему ретімен сұрыптау [cite: 49]
+workers.sort((a, b) => b.wage - a.wage);
+
+// Нәтижені экранға шығару
+let workDiv = document.getElementById('worker-result');
+workers.forEach(w => {
+    workDiv.innerText += `${w._firstName} - Жалақысы: ${w.wage} тг (Сағаттық: ${w.calculateHourlyWage().toFixed(2)} тг)\n`;
+});
+
+// Консольге де шығару (тексеру үшін)
+console.log("Тапсырма орындалды!");
+</script>
+
+</body>
+</html>

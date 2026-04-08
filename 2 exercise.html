@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Жасырын санды тап</title>
+  <link rel="stylesheet" href="style4.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="logo">MyPortfolio</div>
+    <nav class="menu">
+      <a href="bekzat.html">Басты бет</a>
+      <a href="blog1.html">Блог</a>
+      <a href="js.html">JS</a>
+      <a href="game.html">Ойын</a>
+    </nav>
+  </header>
+
+  <main class="page-wrap">
+    <section class="section-box game-box">
+      <h1>Жасырын санды тап</h1>
+      <p>1 мен 20 аралығындағы санды табыңыз.</p>
+
+      <input type="number" id="guess" min="1" max="20" placeholder="Санды енгізіңіз">
+      <button onclick="checkGuess()" class="btn small-btn">Тексеру</button>
+
+      <p id="result" class="result-text"></p>
+      <div id="celebration" class="celebration"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>©️ 2026. Барлық құқық қорғалған.</p>
+  </footer>
+
+  <script>
+    let secretNumber = Math.floor(Math.random() * 20) + 1;
+
+    function checkGuess() {
+      let userGuess = Number(document.getElementById("guess").value);
+      let result = document.getElementById("result");
+      let celebration = document.getElementById("celebration");
+
+      celebration.innerHTML = "";
+
+      if (userGuess === secretNumber) {
+        result.textContent = "Құттықтаймыз! Сіз дұрыс таптыңыз!";
+
+        for (let i = 0; i < 20; i++) {
+          let ball = document.createElement("span");
+          ball.className = "ball";
+          ball.style.left = Math.random() * 100 + "%";
+          ball.style.animationDelay = (Math.random() * 1.5) + "s";
+          celebration.appendChild(ball);
+        }
+      } else if (userGuess < secretNumber) {
+        result.textContent = "Сан үлкенірек";
+      } else {
+        result.textContent = "Сан кішірек";
+      }
+    }
+  </script>
+</body>
+</html>

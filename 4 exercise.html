@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <title>Жаналхан Бекзат - Практикалық жұмыстар</title>
+    <style>
+        /* Ортақ стильдер және Header */
+        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; text-align: center; }
+        .site-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 50px; background: #333; color: white; }
+        .menu a { color: white; text-decoration: none; margin-left: 20px; }
+        
+        /* 1-тапсырма: Батырмалардың түсін өзгерту (Қызғылт-сары) */
+        button { margin: 5px; padding: 10px 15px; border: none; background: #ff5722; color: white; cursor: pointer; border-radius: 5px; }
+        button:hover { background: #e64a19; }
+
+        .section { padding: 40px; border-bottom: 2px solid #ddd; position: relative; overflow: hidden; }
+        
+        /* Ойын стилі */
+        #balloons-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+        .balloon { position: absolute; bottom: -50px; width: 30px; height: 40px; border-radius: 50%; animation: fly 3s linear forwards; }
+        @keyframes fly { to { bottom: 100%; transform: translateX(50px); } }
+
+        /* Дүкен карточкалары */
+        .container { display: flex; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+        .card { background: white; width: 180px; margin: 10px; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: relative; }
+        .price { color: green; font-weight: bold; }
+        .hot-tag { color: red; font-weight: bold; font-size: 12px; display: block; } /* 2-тапсырма: Hot жазуы */
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="logo">Жаналхан Бекзат</div>
+        <nav class="menu">
+            <a href="bekzat.html">Басты бет</a>
+            <a href="blog.html">Блог</a>
+            <a href="2 exercise.html">Ойын</a>
+            <a href="4 exercise.html">Дүкен</a>
+        </nav>
+    </header>
+
+    <div id="game-section" class="section">
+        <h1>«Жасырын санды тап» ойыны</h1>
+        <p>1 мен 20 аралығындағы санды енгізіңіз:</p>
+        <input type="number" id="userGuess" placeholder="Сан...">
+        <button onclick="checkNumber()">Тексеру</button>
+        <p id="gameResult"></p>
+        <div id="balloons-container"></div>
+    </div>
+
+    <div id="shop-section" class="section">
+        <h1>Онлайн магазин</h1>
+        <button onclick="renderProducts(products)">Барлығы</button>
+        <button onclick="showCheap()">Арзан (<300)</button> <button onclick="increasePrice()">Бағаны +50%</button> <button onclick="showMostExpensive()">Ең қымбат (Reduce)</button> <button onclick="showPremium()">Premium (>500)</button> <div class="container" id="productDisplay"></div>
+        <h3 id="totalResult"></h3>
+    </div>
+
+    <script>
+        // --- ОЙЫН ЛОГИКАСЫ (9-практика) ---
+        const secretNum = Math.floor(Math.random() * 20) + 1; // [cite: 10]
+
+        function checkNumber() {
+            const val = document.getElementById("userGuess").value;
+            const res = document.getElementById("gameResult");
+            
+            if (val == secretNum) { // [cite: 13, 14]
+                res.innerHTML = "<b>Құттықтаймыз! Сіз дұрыс таптыңыз!</b>";
+                res.style.color = "green";
+                createBalloons(); // Визуалды эффект [cite: 8]
+            } else if (val < secretNum) { // [cite: 15, 16]
+                res.innerText = "Сан үлкенірек";
+                res.style.color = "blue";
+            } else { // [cite: 17, 18]
+                res.innerText = "Сан кішірек";
+                res.style.color = "red";
+            }
+        }
+
+        function createBalloons() {
+            const container = document.getElementById("balloons-container");
+            for(let i=0; i<15; i++) {
+                let b = document.createElement("div");
+                b.className = "balloon";
+                b.style.left = Math.random() * 100 + "%";
+                b.style.backgroundColor = `hsl(${Math.random()*360}, 70%, 60%)`;
+                container.appendChild(b);
+            }
+        }
+
+        // --- ДҮКЕН ЛОГИКАСЫ (11-апта) ---
+        let products = [
+            {name: "Phone", price: 300}, {name: "Laptop", price: 1000},
+            {name: "Tablet", price: 600}, {name: "Headphones", price: 100},
+            {name: "Camera", price: 800}
+        ];
+
+        function renderProducts(data) {
+            const container = document.getElementById("productDisplay");
+            // map қолдану және Hot жазуын қосу [cite: 69]
+            container.innerHTML = data.map(p => `
+                <div class="card">
+                    <span class="hot-tag">🔥 Hot</span>
+                    <h3>${p.name}</h3>
+                    <p class="price">${p.price}$</p>
+                </div>
+            `).join('');
+        }
+
+        // 3-тапсырма: 300-ден арзан (filter) [cite: 71]
+        function showCheap() {
+            renderProducts(products.filter(p => p.price < 300));
+        }
+
+        // 4-тапсырма: Бағаны +50% (map) 
+        function increasePrice() {
+            products = products.map(p => ({...p, price: Math.round(p.price * 1.5)}));
+            renderProducts(products);
+        }
+
+        // 5-тапсырма: Ең қымбат (reduce) 
+        function showMostExpensive() {
+            const expensive = products.reduce((prev, curr) => prev.price > curr.price ? prev : curr);
+            renderProducts([expensive]);
+            document.getElementById("totalResult").innerText = "Ең қымбат: " + expensive.name;
+        }
+
+        // 6-тапсырма: 500$-дан жоғары [cite: 80]
+        function showPremium() {
+            renderProducts(products.filter(p => p.price > 500));
+        }
+
+        renderProducts(products); // Бастапқы шығару
+    </script>
+</body>
+</html>
